@@ -2,6 +2,7 @@ import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import { StatusCodes } from "http-status-codes";
 import globalErrorHandler from "./middlewares/globalErrorHandler";
+import router from "./app/routes";
 
 const app: Application = express();
 app.use(cors());
@@ -12,11 +13,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req: Request, res: Response) => {
   res.send({
-    Message: "Ph health care server..",
+    Message: "Library management server...",
   });
 });
 
-// app.use("/api/v1", router);
+app.use("/api", router);
 
 app.use(globalErrorHandler);
 
