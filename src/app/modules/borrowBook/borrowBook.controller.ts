@@ -27,7 +27,19 @@ const returnBook: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const getOverdueBooks: RequestHandler = catchAsync(async (req, res) => {
+  let result = await BorrowBookService.getOverdueBooks();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: result.message,
+    data: result.data,
+  });
+});
+
 export const BookController = {
   borrowBook,
   returnBook,
+  getOverdueBooks,
 };

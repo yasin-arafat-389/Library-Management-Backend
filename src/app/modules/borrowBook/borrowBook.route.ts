@@ -7,4 +7,6 @@ router.post("/borrow", BookController.borrowBook);
 
 router.post("/return", BookController.returnBook);
 
+router.get("/borrow/overdue", BookController.getOverdueBooks);
+
 export const BorrowBookRoutes = router;
