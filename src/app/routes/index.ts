@@ -15,7 +15,7 @@ const moduleRoutes = [
     route: MemberRoutes,
   },
   {
-    path: "/borrow",
+    path: "/",
     route: BorrowBookRoutes,
   },
 ];
