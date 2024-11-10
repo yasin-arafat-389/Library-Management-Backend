@@ -50,9 +50,20 @@ const updateMember: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const deleteMember: RequestHandler = catchAsync(async (req, res) => {
+  const result = await memberService.deleteMember(req.params.memberId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Member successfully deleted",
+  });
+});
+
 export const MemberController = {
   createMember,
   getAllMembers,
   getMemberById,
   updateMember,
+  deleteMember,
 };
