@@ -6,3 +6,61 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Book {
+  bookId          String         @id @default(uuid())
+  title           String
+  genre           String
+  publishedYear   Int
+  totalCopies     Int
+  availableCopies Int
+  authors         BookAuthor[]
+  borrowRecords   BorrowRecord[]
+
+  @@map("books")
+}
+
+model Author {
+  authorId    String       @id @default(uuid())
+  name        String
+  bio         String?
+  dateOfBirth DateTime
+  books       BookAuthor[]
+
+  @@map("authors")
+}
+
+model Member {
+  memberId       String         @id @default(uuid())
+  name           String
+  email          String         @unique
+  phone          String
+  membershipDate DateTime
+  borrowRecords  BorrowRecord[]
+
+  @@map("members")
+}
+
+model BorrowRecord {
+  borrowId   String    @id @default(uuid())
+  borrowDate DateTime  @default(now())
+  returnDate DateTime?
+  bookId     String
+  memberId   String
+
+  book   Book   @relation(fields: [bookId], references: [bookId])
+  member Member @relation(fields: [memberId], references: [memberId])
+
+  @@map("borrow_records")
+}
+
+model BookAuthor {
+  bookId   String
+  authorId String
+
+  book   Book   @relation(fields: [bookId], references: [bookId])
+  author Author @relation(fields: [authorId], references: [authorId])
+
+  @@id([bookId, authorId])
+  @@map("book_authors")
+}
